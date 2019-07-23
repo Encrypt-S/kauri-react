@@ -1,0 +1,39 @@
+{
+  "name": "react-native",
+  "version": "1.0.0",
+  "description": "React Native for Web starter template",
+  "keywords": [],
+  "main": "src/index.js",
+  "dependencies": {
+    "expo-cli": "^2.21.2",
+    "g": "^2.0.1",
+    "react": "16.8.4",
+    "react-dom": "16.8.4",
+    "react-native-web": "0.11.x",
+    "react-scripts": "2.1.8"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "start": "react-scripts start",
+    "build-web": "react-scripts build",
+    "test-web": "react-scripts test --env=jsdom",
+    "eject-web": "react-scripts eject",
+    "start-native": "expo start",
+    "android": "expo android",
+    "ios": "expo ios",
+    "build:ios": "expo build:ios",
+    "build:android": "expo build:android"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}
