@@ -7,8 +7,12 @@
   "dependencies": {
     "expo-cli": "^2.21.2",
     "g": "^2.0.1",
+    "i18next": "^17.0.6",
+    "i18next-browser-languagedetector": "^3.0.1",
+    "i18next-xhr-backend": "^3.0.0",
     "react": "16.8.4",
     "react-dom": "16.8.4",
+    "react-i18next": "^10.11.4",
     "react-native-web": "0.11.x",
     "react-router-dom": "^5.0.1",
     "react-router-native": "^5.0.1",
@@ -16,15 +20,15 @@
   },
   "devDependencies": {},
   "scripts": {
-    "start": "react-scripts start",
-    "build-web": "react-scripts build",
-    "test-web": "react-scripts test --env=jsdom",
-    "eject-web": "react-scripts eject",
-    "start-native": "expo start",
-    "android": "expo android",
-    "ios": "expo ios",
-    "build:ios": "expo build:ios",
-    "build:android": "expo build:android"
+    "start": "NODE_PATH=./ react-scripts start",
+    "build-web": "NODE_PATH=./ react-scripts build",
+    "test-web": "NODE_PATH=./ react-scripts test --env=jsdom",
+    "eject-web": "NODE_PATH=./ react-scripts eject",
+    "start-native": "NODE_PATH=./ expo start",
+    "android": "NODE_PATH=./ expo android",
+    "ios": "NODE_PATH=./ expo ios",
+    "build:ios": "NODE_PATH=./ expo build:ios",
+    "build:android": "NODE_PATH=./ expo build:android"
   },
   "browserslist": {
     "production": [

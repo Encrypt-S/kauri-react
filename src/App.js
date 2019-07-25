@@ -1,10 +1,8 @@
 import React, { Component } from "react";
 import { Button, Image, StyleSheet, Text, View } from "react-native";
 import { Router, Route, Link } from "./Router/index";
-
-function Index() {
-  return <h2>Home</h2>;
-}
+import HomeModule from "./Modules/Home/home";
+import "./i18n";
 
 function About() {
   return <h2>About</h2>;
@@ -38,24 +36,24 @@ class App extends Component {
 
           <Text style={styles.text}>
             This is an example of an app built with{" "}
-            <Link href="https://github.com/facebook/create-react-app">
+            <Link to="https://github.com/facebook/create-react-app">
               Create React App
             </Link>{" "}
             and{" "}
-            <Link href="https://github.com/necolas/react-native-web">
+            <Link to="https://github.com/necolas/react-native-web">
               React Native for Web
             </Link>
           </Text>
           <Text style={styles.text}>
             To get started, edit{" "}
-            <Link href="https://codesandbox.io/s/q4qymyp2l6/">
+            <Link to="https://codesandbox.io/s/q4qymyp2l6/">
               <Text style={styles.code}>src/App.js</Text>
             </Link>
             .
           </Text>
           <Button onPress={() => {}} title="Example button" />
   
-          <Route path="/" exact component={Index} />
+          <Route path="/" exact component={HomeModule} />
           <Route path="/about/" component={About} />
           <Route path="/users/" component={Users} />
         </Router>

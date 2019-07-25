@@ -1,0 +1,10 @@
+{
+  "expo": {
+    "name": "Kauri Companion",
+    "slug": "kauri-companion",
+    "sdkVersion": "UNVERSIONED",
+    "privacy": "public",
+    "platforms": ["ios", "android"],
+    "entryPoint": "src/index.js"
+  }
+}
