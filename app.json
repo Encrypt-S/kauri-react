@@ -1,10 +1,17 @@
 {
   "expo": {
     "name": "Kauri Companion",
+    "version": "0.0.1",
     "slug": "kauri-companion",
-    "sdkVersion": "UNVERSIONED",
+    "sdkVersion": "33.0.0",
     "privacy": "public",
     "platforms": ["ios", "android"],
-    "entryPoint": "src/index.js"
+    "entryPoint": "src/index.js",
+    "ios": {
+      "bundleIdentifier": "com.encrypt-s.kauri-companion"
+    },
+    "android": {
+      "package": "com.encrypt_s.kauri_companion"
+    }
   }
 }
