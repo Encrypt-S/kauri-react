@@ -20,7 +20,7 @@ interface HomeProps {
   settings: SettingsState,
 } 
 
-class HomeModule extends Component<HomeProps> {
+export class HomeModule extends Component<HomeProps> {
 
   constructor(props:HomeProps) {
     super(props)
@@ -28,13 +28,6 @@ class HomeModule extends Component<HomeProps> {
     i18n.addResources('en', 'home', English)
     i18n.addResources('de', 'home', German)
   }
-
-  changeLanguage(lng:string) {
-    this.setState({
-      language: lng,
-      })
-    i18n.changeLanguage(lng);
-  };
 
   render(){
     const { displayCurrency, displayUnits } = this.props.settings

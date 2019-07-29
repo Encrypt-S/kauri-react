@@ -1,23 +1,16 @@
 //framework
 import React from "react"
-import { createStore } from 'redux'
-import { Provider } from 'react-redux'
-import Enzyme, { shallow, mount } from "enzyme"
-import toJson from 'enzyme-to-json';
-import configureStore from 'redux-mock-store';
+import Enzyme, { shallow } from "enzyme"
 import Adapter from "enzyme-adapter-react-16"
-import { Button, StyleSheet, Text, View } from "react-native"
 import { expect } from 'chai';
-import { SettingsState } from "../../Store/Types"
+import { Provider } from 'react-redux'
+import configureStore from 'redux-mock-store';
 
 //language
 import { English, German } from "./Settings.lang"
 
-//modules & components
-import SettingsModule from "./Settings"
-import { DisplayUnits, DisplayCurrencies } from '../../Store/Types'
-
 //state
+import { DisplayUnits, DisplayCurrencies } from '../../Store/Types'
 const mockStore = configureStore();
 const initialState = {
   displayCurrency: DisplayCurrencies.NAV,
@@ -25,6 +18,9 @@ const initialState = {
 }
 
 const store = mockStore(initialState)
+
+//modules & components
+import SettingsRedux, { SettingsModule } from "./Settings"
 
 Enzyme.configure({ adapter: new Adapter() })
 
@@ -40,39 +36,80 @@ describe('Settings Module', () => {
   }
 
   it('Renders', () => {
-    const wrapper = shallow(<Provider store={store}><SettingsModule /></Provider>)
+    const wrapper = shallow(<SettingsModule {...props} />)
     expect(wrapper.exists()).to.equal(true)  
   })
 
-  // it('Changes the language by pressing the buttons', () => {
-    const wrapper = shallow(<Provider store={store}><SettingsModule /></Provider>)
-    const component = wrapper.dive()
+  it('Renders with Redux', () => {
+    const wrapper = shallow(<Provider store={store}><SettingsRedux {...props} /></Provider>)
+    expect(wrapper.exists()).to.equal(true)  
+  })
+
+  it('Changes the language by pressing the buttons', () => {
+    const wrapper = shallow(<SettingsModule {...props} />)
 
     //should be initialised to english
 
-    const complexComponents = component.findWhere(n => {
-      console.log(n.type())
-      return n.type() !== 'string'
-    });
+    expect(wrapper.findWhere((node:any) => node.prop('testID') === 'title').render().text()).to.equal(English.title)
+    expect(wrapper.findWhere((node:any) => node.prop('testID') === 'description').render().text()).to.equal(English.description)
+    expect(wrapper.findWhere((node:any) => node.prop('testID') === 'displayCurrency').render().text()).to.equal(English.displayCurrency)
+    expect(wrapper.findWhere((node:any) => node.prop('testID') === 'displayUnits').render().text()).to.equal(English.displayUnits)
 
-    console.log('complexComponents', complexComponents.length)
+    // //change to german
+    expect(wrapper.findWhere((node:any) => node.prop('testID') === 'i18n-german').exists()).to.equal(true)
+    wrapper.findWhere((node:any) => node.prop('testID') === 'i18n-german').simulate('press')
+    expect(wrapper.findWhere((node:any) => node.prop('testID') === 'title').render().text()).to.equal(German.title)
+    expect(wrapper.findWhere((node:any) => node.prop('testID') === 'description').render().text()).to.equal(German.description)
+    expect(wrapper.findWhere((node:any) => node.prop('testID') === 'displayCurrency').render().text()).to.equal(German.displayCurrency)
+    expect(wrapper.findWhere((node:any) => node.prop('testID') === 'displayUnits').render().text()).to.equal(German.displayUnits)
+
+    //change back to english
+    expect(wrapper.findWhere((node:any) => node.prop('testID') === 'i18n-english').exists()).to.equal(true)
+    wrapper.findWhere((node:any) => node.prop('testID') === 'i18n-english').simulate('press')
+    expect(wrapper.findWhere((node:any) => node.prop('testID') === 'title').render().text()).to.equal(English.title)
+    expect(wrapper.findWhere((node:any) => node.prop('testID') === 'description').render().text()).to.equal(English.description)
+    expect(wrapper.findWhere((node:any) => node.prop('testID') === 'displayCurrency').render().text()).to.equal(English.displayCurrency)
+    expect(wrapper.findWhere((node:any) => node.prop('testID') === 'displayUnits').render().text()).to.equal(English.displayUnits)
 
 
-    //expect(wrapper.findWhere((node:any) => node.prop('testID') === 'title').render().text()).to.equal(English.title)
-    
-  //   //expect(wrapper.findWhere((node:any) => node.prop('testID') === 'description').render().text()).toEqual(English.description)
+  })
 
-  //   // // //change to german
-  //   // expect(wrapper.findWhere((node:any) => node.prop('testID') === 'i18n-german').exists()).toBe(true)
-  //   // wrapper.findWhere((node:any) => node.prop('testID') === 'i18n-german').simulate('press')
-  //   // expect(wrapper.findWhere((node:any) => node.prop('testID') === 'title').render().text()).toEqual(German.title)
-  //   // expect(wrapper.findWhere((node:any) => node.prop('testID') === 'description').render().text()).toEqual(German.description)
+  it('Changes the display currency by pressing the buttons', () => {
+    const wrapper = shallow(<SettingsModule {...props} />)
 
-  //   // //change back to english
-  //   // expect(wrapper.findWhere((node:any) => node.prop('testID') === 'i18n-english').exists()).toBe(true)
-  //   // wrapper.findWhere((node:any) => node.prop('testID') === 'i18n-english').simulate('press')
-  //   // expect(wrapper.findWhere((node:any) => node.prop('testID') === 'title').render().text()).toEqual(English.title)
-  //   // expect(wrapper.findWhere((node:any) => node.prop('testID') === 'description').render().text()).toEqual(English.description)
-  // })
+    //should be initialised to NAV
+
+    expect(wrapper.findWhere((node:any) => node.prop('testID') === 'current-currency').render().text()).to.equal('Using '+DisplayCurrencies.NAV)
+
+    wrapper.findWhere((node:any) => node.prop('testID') === 'currency-btc').simulate('press')
+    expect(props.updateDisplayCurrency.mock.calls.length).to.equal(1)
+    expect(props.updateDisplayCurrency.mock.calls[0][0]).to.equal(DisplayCurrencies.BTC)
+
+    wrapper.findWhere((node:any) => node.prop('testID') === 'currency-nav').simulate('press')
+    expect(props.updateDisplayCurrency.mock.calls.length).to.equal(2)
+    expect(props.updateDisplayCurrency.mock.calls[1][0]).to.equal(DisplayCurrencies.NAV)
+
+  })
+
+  it('Changes the display units by pressing the buttons', () => {
+    const wrapper = shallow(<SettingsModule {...props} />)
+
+    //should be initialised to NAV
+
+    expect(wrapper.findWhere((node:any) => node.prop('testID') === 'current-units').render().text()).to.equal('Using '+DisplayUnits.WHOLE+ ' Units')
+
+    wrapper.findWhere((node:any) => node.prop('testID') === 'units-micro').simulate('press')
+    expect(props.updateDisplayUnits.mock.calls.length).to.equal(1)
+    expect(props.updateDisplayUnits.mock.calls[0][0]).to.equal(DisplayUnits.MICRO)
+
+    wrapper.findWhere((node:any) => node.prop('testID') === 'units-milli').simulate('press')
+    expect(props.updateDisplayUnits.mock.calls.length).to.equal(2)
+    expect(props.updateDisplayUnits.mock.calls[1][0]).to.equal(DisplayUnits.MILLI)
+
+    wrapper.findWhere((node:any) => node.prop('testID') === 'units-whole').simulate('press')
+    expect(props.updateDisplayUnits.mock.calls.length).to.equal(3)
+    expect(props.updateDisplayUnits.mock.calls[2][0]).to.equal(DisplayUnits.WHOLE)
+
+  })
 
 })

@@ -20,31 +20,24 @@ interface WizardProps {
   settings: SettingsState,
 } 
 
-class WizardModule extends Component<WizardProps> {
+export class WizardModule extends Component<WizardProps> {
 
   constructor(props:WizardProps) {
     super(props)
     
-    i18n.addResources('en', 'wizard', English)
-    i18n.addResources('de', 'wizard', German)
+    i18n.addResources('en', 'home', English)
+    i18n.addResources('de', 'home', German)
   }
-
-  changeLanguage(lng:string) {
-    this.setState({
-      language: lng,
-      })
-    i18n.changeLanguage(lng);
-  };
 
   render(){
     const { displayCurrency, displayUnits } = this.props.settings
     return(
       <View>
         <Text testID="title" style={styles.title}>
-          <Translation>{ (t) => t('wizard:title')}</Translation>
+          <Translation>{ (t) => t('home:title')}</Translation>
         </Text>
         <Text testID="description" style={styles.title}>
-          <Translation>{ (t) => t('wizard:description')}</Translation>
+          <Translation>{ (t) => t('home:description')}</Translation>
         </Text>
         <View>
           <Text>Using {displayUnits} {displayCurrency} Units</Text>

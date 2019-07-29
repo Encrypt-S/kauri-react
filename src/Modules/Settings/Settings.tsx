@@ -50,8 +50,6 @@ export class SettingsModule extends Component<SettingsProps> {
 
   render(){
 
-    console.log('props',this.props)
-
     const { displayCurrency, displayUnits } = this.props.settings
     const { updateDisplayCurrency, updateDisplayUnits } = this.props
 
@@ -69,7 +67,7 @@ export class SettingsModule extends Component<SettingsProps> {
           </Text>
           <Button testID="currency-nav" onPress={() => updateDisplayCurrency(DisplayCurrencies.NAV)} title="Use NAV"></Button>
           <Button testID="currency-btc" onPress={() => updateDisplayCurrency(DisplayCurrencies.BTC)} title="Use BTC"></Button>
-          <Text>Using {displayCurrency}</Text>
+          <Text testID="current-currency">Using {displayCurrency}</Text>
         </View>
 
         <View>
@@ -79,11 +77,11 @@ export class SettingsModule extends Component<SettingsProps> {
           <Button testID="units-whole" onPress={() => updateDisplayUnits(DisplayUnits.WHOLE)} title="Use Whole Units"></Button>
           <Button testID="units-micro" onPress={() => updateDisplayUnits(DisplayUnits.MICRO)} title="Use Micro Units"></Button>
           <Button testID="units-milli" onPress={() => updateDisplayUnits(DisplayUnits.MILLI)} title="Use Milli Units"></Button>
-          <Text>Using {displayUnits} Units</Text>
+          <Text testID="current-units">Using {displayUnits} Units</Text>
         </View>
         
-        <Button testID="settings-german" onPress={() => this.changeLanguage("de")} title="Use German"></Button>
-        <Button testID="settings-english" onPress={() => this.changeLanguage("en")} title="Use English"></Button>
+        <Button testID="i18n-german" onPress={() => this.changeLanguage("de")} title="Use German"></Button>
+        <Button testID="i18n-english" onPress={() => this.changeLanguage("en")} title="Use English"></Button>
       </View>
     )
   }
