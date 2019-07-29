@@ -1,21 +1,31 @@
-import React, { Component } from "react";
+//framework
+import React, { Component } from "react"
 import { connect } from 'react-redux'
-import i18n from "../../i18n";
-import { Button, StyleSheet, Text, View } from "react-native";
+import { Button, StyleSheet, Text, View } from "react-native"
+
+//language
+import i18n from "../../i18n"
 import { English, German } from "./Settings.lang"
 import { Translation } from 'react-i18next';
+
+//state
+import { AppState } from '../../Store'
 import { DisplayUnits, DisplayCurrencies } from '../../Store/Types'
 import { SettingsState } from "../../Store/Types"
 import { updateDisplayCurrency, updateDisplayUnits } from "../../Store/Actions"
-import { AppState } from '../../Store'
 
+//modules & components
+// @TODO
+
+//interfaces
 interface SettingsProps {
   settings: SettingsState,
   updateDisplayCurrency: typeof updateDisplayCurrency,
   updateDisplayUnits: typeof updateDisplayUnits,
 }
 
-class SettingsModule extends Component<SettingsProps> {
+
+export class SettingsModule extends Component<SettingsProps> {
 
   state = {
     language: 'en',
@@ -28,7 +38,6 @@ class SettingsModule extends Component<SettingsProps> {
 
     i18n.addResources('en', 'settings', English)
     i18n.addResources('de', 'settings', German)
-    i18n.changeLanguage(language)
   
   }
 
@@ -39,14 +48,12 @@ class SettingsModule extends Component<SettingsProps> {
     i18n.changeLanguage(lng)
   };
 
-  changeCurrency(currency:DisplayCurrencies) {
-    console.log(`currency ${currency}`)
-    updateDisplayCurrency(currency)
-  };
-
   render(){
 
+    console.log('props',this.props)
+
     const { displayCurrency, displayUnits } = this.props.settings
+    const { updateDisplayCurrency, updateDisplayUnits } = this.props
 
     return(
       <View>
@@ -60,13 +67,23 @@ class SettingsModule extends Component<SettingsProps> {
           <Text style={styles.title} testID="displayCurrency">
             <Translation>{ (t) => t('settings:displayCurrency')}</Translation>
           </Text>
-          <Button testID="currency-nav" onPress={() => this.changeCurrency(DisplayCurrencies.NAV)} title="Use NAV"></Button>
-          <Button testID="currency-btc" onPress={() => this.changeCurrency(DisplayCurrencies.BTC)} title="Use BTC"></Button>
+          <Button testID="currency-nav" onPress={() => updateDisplayCurrency(DisplayCurrencies.NAV)} title="Use NAV"></Button>
+          <Button testID="currency-btc" onPress={() => updateDisplayCurrency(DisplayCurrencies.BTC)} title="Use BTC"></Button>
           <Text>Using {displayCurrency}</Text>
         </View>
+
+        <View>
+          <Text style={styles.title} testID="displayUnits">
+            <Translation>{ (t) => t('settings:displayUnits')}</Translation>
+          </Text>
+          <Button testID="units-whole" onPress={() => updateDisplayUnits(DisplayUnits.WHOLE)} title="Use Whole Units"></Button>
+          <Button testID="units-micro" onPress={() => updateDisplayUnits(DisplayUnits.MICRO)} title="Use Micro Units"></Button>
+          <Button testID="units-milli" onPress={() => updateDisplayUnits(DisplayUnits.MILLI)} title="Use Milli Units"></Button>
+          <Text>Using {displayUnits} Units</Text>
+        </View>
         
-        <Button testID="i18n-german" onPress={() => this.changeLanguage("de")} title="Use German"></Button>
-        <Button testID="i18n-english" onPress={() => this.changeLanguage("en")} title="Use English"></Button>
+        <Button testID="settings-german" onPress={() => this.changeLanguage("de")} title="Use German"></Button>
+        <Button testID="settings-english" onPress={() => this.changeLanguage("en")} title="Use English"></Button>
       </View>
     )
   }
@@ -86,5 +103,9 @@ const mapStateToProps = (state: AppState) => ({
   settings: state.settings,
 })
 
+const mapDispatchToProps = (dispatch:any) => ({
+  updateDisplayCurrency: (currency:DisplayCurrencies) => dispatch(updateDisplayCurrency(currency)),
+  updateDisplayUnits: (units:DisplayUnits) => dispatch(updateDisplayUnits(units)),
+})
 
-export default connect(mapStateToProps)(SettingsModule)
+export default connect(mapStateToProps, mapDispatchToProps)(SettingsModule)

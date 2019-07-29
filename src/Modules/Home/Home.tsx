@@ -1,28 +1,32 @@
+//framework
 import React, { Component } from "react";
+import { connect } from 'react-redux'
+import { StyleSheet, Text, View } from "react-native";
+
+//language
 import i18n from "../../i18n";
-import { Button, StyleSheet, Text, View } from "react-native";
 import { English, German } from "./Home.lang"
 import { Translation } from 'react-i18next';
 
+//state
+import { SettingsState } from "../../Store/Types"
+import { AppState } from '../../Store'
+
+//modules & components
+// @TODO
+
+//interfaces
 interface HomeProps {
-    test: string,
+  settings: SettingsState,
 } 
 
-class HomeModule extends Component {
-
-  state = {
-    language: 'en',
-  }
+class HomeModule extends Component<HomeProps> {
 
   constructor(props:HomeProps) {
     super(props)
     
-    const { language } = this.state
-
     i18n.addResources('en', 'home', English)
     i18n.addResources('de', 'home', German)
-    i18n.changeLanguage(language)
-  
   }
 
   changeLanguage(lng:string) {
@@ -33,6 +37,7 @@ class HomeModule extends Component {
   };
 
   render(){
+    const { displayCurrency, displayUnits } = this.props.settings
     return(
       <View>
         <Text testID="title" style={styles.title}>
@@ -41,13 +46,13 @@ class HomeModule extends Component {
         <Text testID="description" style={styles.title}>
           <Translation>{ (t) => t('home:description')}</Translation>
         </Text>
-        <Button testID="i18n-german" onPress={() => this.changeLanguage("de")} title="Use German"></Button>
-        <Button testID="i18n-english" onPress={() => this.changeLanguage("en")} title="Use English"></Button>
+        <View>
+          <Text>Using {displayUnits} {displayCurrency} Units</Text>
+        </View>
       </View>
     )
   }
- 
-}
+}//render
 
 const styles = StyleSheet.create({
   title: {
@@ -58,4 +63,8 @@ const styles = StyleSheet.create({
   },
 });
 
-export default HomeModule
+const mapStateToProps = (state: AppState) => ({
+  settings: state.settings,
+})
+
+export default connect(mapStateToProps)(HomeModule)

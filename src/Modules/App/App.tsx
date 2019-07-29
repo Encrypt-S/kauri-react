@@ -1,9 +1,11 @@
-//framework imports
+//framework
 import React, { Component } from "react";
-import { connect, Provider } from 'react-redux'
+import { Provider } from 'react-redux'
 import { Image, StyleSheet, Text, View } from "react-native"
 import { createStore } from 'redux'
 import { Router, Route, Link } from "../../Router/Index"
+
+//language
 import "../../i18n"
 
 //state
@@ -21,7 +23,6 @@ const logoUri = `data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg"
 class App extends Component {
 
   render() {
-    console.log(this.props)
     return (
       <Provider store={store}>
         <View style={styles.app}>
