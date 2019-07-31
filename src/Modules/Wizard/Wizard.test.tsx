@@ -1,20 +1,22 @@
 //framework
 import React from "react"
-import Enzyme, { shallow } from "enzyme"
+import Enzyme, { shallow, mount } from "enzyme"
 import Adapter from "enzyme-adapter-react-16"
 import { expect } from 'chai';
 import { Provider } from 'react-redux'
-import configureStore from 'redux-mock-store';
+import configureStore from 'redux-mock-store'
 
 //language
 import { English, German } from "./Wizard.lang"
 
 //state
-import { DisplayUnits, DisplayCurrencies } from '../../Store/Types'
+import { DisplayUnits, DisplayCurrencies } from '../../Store/Types/Settings'
 const mockStore = configureStore();
 const initialState = {
-  displayCurrency: DisplayCurrencies.NAV,
-  displayUnits: DisplayUnits.WHOLE
+  settings: {
+    displayCurrency: DisplayCurrencies.NAV,
+    displayUnits: DisplayUnits.WHOLE
+  }  
 }
 
 const store = mockStore(initialState)
@@ -39,7 +41,7 @@ describe('Wizard Module', () => {
   })
 
   it('Renders with Redux', () => {
-    const wrapper = shallow(<Provider store={store}><WizardRedux {...props} /></Provider>)
+    const wrapper = mount(<Provider store={store}><WizardRedux {...props} /></Provider>)
     expect(wrapper.exists()).to.equal(true)  
   })
 

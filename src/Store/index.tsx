@@ -1,6 +1,5 @@
-import { settingsReducer } from "./Reducers"
-import { combineReducers } from "redux";
-
+import { settingsReducer } from "./Reducers/Settings.reducers"
+import { combineReducers, createStore, applyMiddleware } from "redux";
 
 const rootReducer = combineReducers({
   settings: settingsReducer,

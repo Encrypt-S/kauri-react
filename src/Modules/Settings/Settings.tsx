@@ -4,15 +4,15 @@ import { connect } from 'react-redux'
 import { Button, StyleSheet, Text, View } from "react-native"
 
 //language
-import i18n from "../../i18n"
+import i18n from "../../Components/Language/i18n"
 import { English, German } from "./Settings.lang"
 import { Translation } from 'react-i18next';
 
 //state
 import { AppState } from '../../Store'
-import { DisplayUnits, DisplayCurrencies } from '../../Store/Types'
-import { SettingsState } from "../../Store/Types"
-import { updateDisplayCurrency, updateDisplayUnits } from "../../Store/Actions"
+import { DisplayUnits, DisplayCurrencies, DisplayLanguage } from '../../Store/Types/Settings.types'
+import { SettingsState } from "../../Store/Types/Settings.types"
+import { updateDisplayCurrency, updateDisplayUnits, updateDisplayLanguage } from "../../Store/Actions/Settings.actions"
 
 //modules & components
 // @TODO
@@ -22,36 +22,24 @@ interface SettingsProps {
   settings: SettingsState,
   updateDisplayCurrency: typeof updateDisplayCurrency,
   updateDisplayUnits: typeof updateDisplayUnits,
+  updateDisplayLanguage: typeof updateDisplayLanguage,
 }
 
 
 export class SettingsModule extends Component<SettingsProps> {
 
-  state = {
-    language: 'en',
-  }
-
   constructor(props:SettingsProps) {
     super(props)
     
-    const { language } = this.state
-
     i18n.addResources('en', 'settings', English)
     i18n.addResources('de', 'settings', German)
   
   }
 
-  changeLanguage(lng:string) {
-    this.setState({
-      language: lng,
-      })
-    i18n.changeLanguage(lng)
-  };
-
   render(){
 
-    const { displayCurrency, displayUnits } = this.props.settings
-    const { updateDisplayCurrency, updateDisplayUnits } = this.props
+    const { displayCurrency, displayUnits, displayLanguage } = this.props.settings
+    const { updateDisplayCurrency, updateDisplayUnits, updateDisplayLanguage } = this.props
 
     return(
       <View>
@@ -80,8 +68,12 @@ export class SettingsModule extends Component<SettingsProps> {
           <Text testID="current-units">Using {displayUnits} Units</Text>
         </View>
         
-        <Button testID="i18n-german" onPress={() => this.changeLanguage("de")} title="Use German"></Button>
-        <Button testID="i18n-english" onPress={() => this.changeLanguage("en")} title="Use English"></Button>
+        <View>
+          <Button testID="i18n-german" onPress={() => updateDisplayLanguage(DisplayLanguage.GERMAN)} title="Use German"></Button>
+          <Button testID="i18n-english" onPress={() => updateDisplayLanguage(DisplayLanguage.ENGLISH)} title="Use English"></Button>
+          <Text testID="current-language">Using {displayLanguage}</Text>
+        </View>
+        
       </View>
     )
   }
@@ -104,6 +96,7 @@ const mapStateToProps = (state: AppState) => ({
 const mapDispatchToProps = (dispatch:any) => ({
   updateDisplayCurrency: (currency:DisplayCurrencies) => dispatch(updateDisplayCurrency(currency)),
   updateDisplayUnits: (units:DisplayUnits) => dispatch(updateDisplayUnits(units)),
+  updateDisplayLanguage: (language:DisplayLanguage) => dispatch(updateDisplayLanguage(language))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(SettingsModule)

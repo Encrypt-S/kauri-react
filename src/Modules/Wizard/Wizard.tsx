@@ -4,12 +4,12 @@ import { connect } from 'react-redux'
 import { StyleSheet, Text, View } from "react-native";
 
 //language
-import i18n from "../../i18n";
+import i18n from "../../Components/Language/i18n";
 import { English, German } from "./Wizard.lang"
 import { Translation } from 'react-i18next';
 
 //state
-import { SettingsState } from "../../Store/Types"
+import { SettingsState } from "../../Store/Types/Settings.types"
 import { AppState } from '../../Store'
 
 //modules & components

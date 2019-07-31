@@ -6,7 +6,7 @@ import { createStore } from 'redux'
 import { Router, Route, Link } from "../../Router/Index"
 
 //language
-import "../../i18n"
+import "../../Components/Language/i18n"
 
 //state
 import rootReducer from "../../Store";
