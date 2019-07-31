@@ -10,7 +10,7 @@ import configureStore from 'redux-mock-store';
 import { English, German } from "./Settings.lang"
 
 //state
-import { DisplayUnits, DisplayCurrencies } from '../../Store/Types/Settings'
+import { DisplayUnits, DisplayCurrencies, DisplayLanguage } from '../../Store/Types/Settings.types'
 const mockStore = configureStore();
 const initialState = {
   settings: {
@@ -31,9 +31,11 @@ describe('Settings Module', () => {
   const props = {
     updateDisplayCurrency: jest.fn(),
     updateDisplayUnits: jest.fn(),
+    updateDisplayLanguage: jest.fn(),
     settings: {
       displayCurrency: DisplayCurrencies.NAV,
       displayUnits: DisplayUnits.WHOLE,
+      displayLanguage: DisplayLanguage.ENGLISH,
     }
   }
 
@@ -60,18 +62,14 @@ describe('Settings Module', () => {
     // //change to german
     expect(wrapper.findWhere((node:any) => node.prop('testID') === 'i18n-german').exists()).to.equal(true)
     wrapper.findWhere((node:any) => node.prop('testID') === 'i18n-german').simulate('press')
-    expect(wrapper.findWhere((node:any) => node.prop('testID') === 'title').render().text()).to.equal(German.title)
-    expect(wrapper.findWhere((node:any) => node.prop('testID') === 'description').render().text()).to.equal(German.description)
-    expect(wrapper.findWhere((node:any) => node.prop('testID') === 'displayCurrency').render().text()).to.equal(German.displayCurrency)
-    expect(wrapper.findWhere((node:any) => node.prop('testID') === 'displayUnits').render().text()).to.equal(German.displayUnits)
+    expect(props.updateDisplayLanguage.mock.calls.length).to.equal(1)
+    expect(props.updateDisplayLanguage.mock.calls[0][0]).to.equal(DisplayLanguage.GERMAN)
 
     //change back to english
     expect(wrapper.findWhere((node:any) => node.prop('testID') === 'i18n-english').exists()).to.equal(true)
     wrapper.findWhere((node:any) => node.prop('testID') === 'i18n-english').simulate('press')
-    expect(wrapper.findWhere((node:any) => node.prop('testID') === 'title').render().text()).to.equal(English.title)
-    expect(wrapper.findWhere((node:any) => node.prop('testID') === 'description').render().text()).to.equal(English.description)
-    expect(wrapper.findWhere((node:any) => node.prop('testID') === 'displayCurrency').render().text()).to.equal(English.displayCurrency)
-    expect(wrapper.findWhere((node:any) => node.prop('testID') === 'displayUnits').render().text()).to.equal(English.displayUnits)
+    expect(props.updateDisplayLanguage.mock.calls.length).to.equal(2)
+    expect(props.updateDisplayLanguage.mock.calls[1][0]).to.equal(DisplayLanguage.ENGLISH)
 
 
   })

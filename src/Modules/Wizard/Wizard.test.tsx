@@ -10,7 +10,7 @@ import configureStore from 'redux-mock-store'
 import { English, German } from "./Wizard.lang"
 
 //state
-import { DisplayUnits, DisplayCurrencies } from '../../Store/Types/Settings'
+import { DisplayUnits, DisplayCurrencies } from '../../Store/Types/Settings.types'
 const mockStore = configureStore();
 const initialState = {
   settings: {
