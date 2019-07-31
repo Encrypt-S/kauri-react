@@ -1,53 +1,51 @@
+//framework
 import React, { Component } from "react";
-import i18n from "../../i18n";
-import { Button, StyleSheet, Text, View, TextStyle } from "react-native";
+import { connect } from 'react-redux'
+import { StyleSheet, Text, View } from "react-native";
+
+//language
+import i18n from "../../Components/Language/i18n";
 import { English, German } from "./Wizard.lang"
 import { Translation } from 'react-i18next';
 
+//state
+import { SettingsState } from "../../Store/Types/Settings.types"
+import { AppState } from '../../Store'
+
+//modules & components
+// @TODO
+
+//interfaces
 interface WizardProps {
-    test: string,
+  settings: SettingsState,
 } 
 
-class WizardModule extends Component {
-
-  state = {
-    language: 'en',
-  }
+export class WizardModule extends Component<WizardProps> {
 
   constructor(props:WizardProps) {
     super(props)
-
-    const { language } = this.state
-
-    i18n.addResources('en', 'wizard', English)
-    i18n.addResources('de', 'wizard', German)
-    i18n.changeLanguage(language)
-
+    
+    i18n.addResources('en', 'home', English)
+    i18n.addResources('de', 'home', German)
   }
 
-  changeLanguage(lng:string) {
-    this.setState({
-      language: lng,
-      })
-    i18n.changeLanguage(lng);
-  };
-
   render(){
+    const { displayCurrency, displayUnits } = this.props.settings
     return(
       <View>
         <Text testID="title" style={styles.title}>
-          <Translation>{ (t) => t('wizard:title')}</Translation>
+          <Translation>{ (t) => t('home:title')}</Translation>
         </Text>
         <Text testID="description" style={styles.title}>
-          <Translation>{ (t) => t('wizard:description')}</Translation>
+          <Translation>{ (t) => t('home:description')}</Translation>
         </Text>
-        <Button testID="i18n-german" onPress={() => this.changeLanguage("de")} title="Use German"></Button>
-        <Button testID="i18n-english" onPress={() => this.changeLanguage("en")} title="Use English"></Button>
+        <View>
+          <Text>Using {displayUnits} {displayCurrency} Units</Text>
+        </View>
       </View>
     )
   }
- 
-}
+}//render
 
 const styles = StyleSheet.create({
   title: {
@@ -58,4 +56,8 @@ const styles = StyleSheet.create({
   },
 });
 
-export default WizardModule
+const mapStateToProps = (state: AppState) => ({
+  settings: state.settings,
+})
+
+export default connect(mapStateToProps)(WizardModule)
