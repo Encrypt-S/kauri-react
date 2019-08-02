@@ -43,35 +43,35 @@ export class SettingsModule extends Component<SettingsProps> {
 
     return(
       <View>
-        <Text style={styles.title} testID="title">
+        <Text style={styles.title} testID="settings-title">
           <Translation>{ (t) => t('settings:title')}</Translation>
         </Text>
-        <Text style={styles.title} testID="description">
+        <Text style={styles.title} testID="settings-description">
           <Translation>{ (t) => t('settings:description')}</Translation>
         </Text>
         <View>
-          <Text style={styles.title} testID="displayCurrency">
+          <Text style={styles.title} testID="settings-displayCurrency">
             <Translation>{ (t) => t('settings:displayCurrency')}</Translation>
           </Text>
-          <Button testID="currency-nav" onPress={() => updateDisplayCurrency(DisplayCurrencies.NAV)} title="Use NAV"></Button>
-          <Button testID="currency-btc" onPress={() => updateDisplayCurrency(DisplayCurrencies.BTC)} title="Use BTC"></Button>
-          <Text testID="current-currency">Using {displayCurrency}</Text>
+          <Button testID="settings-currency-nav" onPress={() => updateDisplayCurrency(DisplayCurrencies.NAV)} title="Use NAV"></Button>
+          <Button testID="settings-currency-btc" onPress={() => updateDisplayCurrency(DisplayCurrencies.BTC)} title="Use BTC"></Button>
+          <Text testID="settings-current-currency">Using {displayCurrency}</Text>
         </View>
 
         <View>
-          <Text style={styles.title} testID="displayUnits">
+          <Text style={styles.title} testID="settings-displayUnits">
             <Translation>{ (t) => t('settings:displayUnits')}</Translation>
           </Text>
-          <Button testID="units-whole" onPress={() => updateDisplayUnits(DisplayUnits.WHOLE)} title="Use Whole Units"></Button>
-          <Button testID="units-micro" onPress={() => updateDisplayUnits(DisplayUnits.MICRO)} title="Use Micro Units"></Button>
-          <Button testID="units-milli" onPress={() => updateDisplayUnits(DisplayUnits.MILLI)} title="Use Milli Units"></Button>
-          <Text testID="current-units">Using {displayUnits} Units</Text>
+          <Button testID="settings-units-whole" onPress={() => updateDisplayUnits(DisplayUnits.WHOLE)} title="Use Whole Units"></Button>
+          <Button testID="settings-units-micro" onPress={() => updateDisplayUnits(DisplayUnits.MICRO)} title="Use Micro Units"></Button>
+          <Button testID="settings-units-milli" onPress={() => updateDisplayUnits(DisplayUnits.MILLI)} title="Use Milli Units"></Button>
+          <Text testID="settings-current-units">Using {displayUnits} Units</Text>
         </View>
         
         <View>
-          <Button testID="i18n-german" onPress={() => updateDisplayLanguage(DisplayLanguage.GERMAN)} title="Use German"></Button>
-          <Button testID="i18n-english" onPress={() => updateDisplayLanguage(DisplayLanguage.ENGLISH)} title="Use English"></Button>
-          <Text testID="current-language">Using {displayLanguage}</Text>
+          <Button testID="settings-german" onPress={() => updateDisplayLanguage(DisplayLanguage.GERMAN)} title="Use German"></Button>
+          <Button testID="settings-english" onPress={() => updateDisplayLanguage(DisplayLanguage.ENGLISH)} title="Use English"></Button>
+          <Text testID="settings-current-language">Using {displayLanguage}</Text>
         </View>
         
       </View>

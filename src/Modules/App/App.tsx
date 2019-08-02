@@ -33,9 +33,9 @@ class App extends Component {
         <View style={styles.app}>
           <Router>
             
-            <Link to="/">Home</Link>
-            <Link to="/settings/">Settings</Link>
-            <Link to="/wizard/">Wizard</Link>
+            <Link to="/" data-testid="nav-home">Home</Link>
+            <Link to="/settings/" data-testid="nav-settings">Settings</Link>
+            <Link to="/wizard/" data-testid="nav-wizard">Wizard</Link>
               
             <View style={styles.header}>
               <Image

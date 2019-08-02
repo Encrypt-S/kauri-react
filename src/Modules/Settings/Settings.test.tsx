@@ -54,20 +54,20 @@ describe('Settings Module', () => {
 
     //should be initialised to english
 
-    expect(wrapper.findWhere((node:any) => node.prop('testID') === 'title').render().text()).to.equal(English.title)
-    expect(wrapper.findWhere((node:any) => node.prop('testID') === 'description').render().text()).to.equal(English.description)
-    expect(wrapper.findWhere((node:any) => node.prop('testID') === 'displayCurrency').render().text()).to.equal(English.displayCurrency)
-    expect(wrapper.findWhere((node:any) => node.prop('testID') === 'displayUnits').render().text()).to.equal(English.displayUnits)
+    expect(wrapper.findWhere((node:any) => node.prop('testID') === 'settings-title').render().text()).to.equal(English.title)
+    expect(wrapper.findWhere((node:any) => node.prop('testID') === 'settings-description').render().text()).to.equal(English.description)
+    expect(wrapper.findWhere((node:any) => node.prop('testID') === 'settings-displayCurrency').render().text()).to.equal(English.displayCurrency)
+    expect(wrapper.findWhere((node:any) => node.prop('testID') === 'settings-displayUnits').render().text()).to.equal(English.displayUnits)
 
     // //change to german
-    expect(wrapper.findWhere((node:any) => node.prop('testID') === 'i18n-german').exists()).to.equal(true)
-    wrapper.findWhere((node:any) => node.prop('testID') === 'i18n-german').simulate('press')
+    expect(wrapper.findWhere((node:any) => node.prop('testID') === 'settings-german').exists()).to.equal(true)
+    wrapper.findWhere((node:any) => node.prop('testID') === 'settings-german').simulate('press')
     expect(props.updateDisplayLanguage.mock.calls.length).to.equal(1)
     expect(props.updateDisplayLanguage.mock.calls[0][0]).to.equal(DisplayLanguage.GERMAN)
 
     //change back to english
-    expect(wrapper.findWhere((node:any) => node.prop('testID') === 'i18n-english').exists()).to.equal(true)
-    wrapper.findWhere((node:any) => node.prop('testID') === 'i18n-english').simulate('press')
+    expect(wrapper.findWhere((node:any) => node.prop('testID') === 'settings-english').exists()).to.equal(true)
+    wrapper.findWhere((node:any) => node.prop('testID') === 'settings-english').simulate('press')
     expect(props.updateDisplayLanguage.mock.calls.length).to.equal(2)
     expect(props.updateDisplayLanguage.mock.calls[1][0]).to.equal(DisplayLanguage.ENGLISH)
 
@@ -79,13 +79,13 @@ describe('Settings Module', () => {
 
     //should be initialised to NAV
 
-    expect(wrapper.findWhere((node:any) => node.prop('testID') === 'current-currency').render().text()).to.equal('Using '+DisplayCurrencies.NAV)
+    expect(wrapper.findWhere((node:any) => node.prop('testID') === 'settings-current-currency').render().text()).to.equal('Using '+DisplayCurrencies.NAV)
 
-    wrapper.findWhere((node:any) => node.prop('testID') === 'currency-btc').simulate('press')
+    wrapper.findWhere((node:any) => node.prop('testID') === 'settings-currency-btc').simulate('press')
     expect(props.updateDisplayCurrency.mock.calls.length).to.equal(1)
     expect(props.updateDisplayCurrency.mock.calls[0][0]).to.equal(DisplayCurrencies.BTC)
 
-    wrapper.findWhere((node:any) => node.prop('testID') === 'currency-nav').simulate('press')
+    wrapper.findWhere((node:any) => node.prop('testID') === 'settings-currency-nav').simulate('press')
     expect(props.updateDisplayCurrency.mock.calls.length).to.equal(2)
     expect(props.updateDisplayCurrency.mock.calls[1][0]).to.equal(DisplayCurrencies.NAV)
 
@@ -96,17 +96,17 @@ describe('Settings Module', () => {
 
     //should be initialised to NAV
 
-    expect(wrapper.findWhere((node:any) => node.prop('testID') === 'current-units').render().text()).to.equal('Using '+DisplayUnits.WHOLE+ ' Units')
+    expect(wrapper.findWhere((node:any) => node.prop('testID') === 'settings-current-units').render().text()).to.equal('Using '+DisplayUnits.WHOLE+ ' Units')
 
-    wrapper.findWhere((node:any) => node.prop('testID') === 'units-micro').simulate('press')
+    wrapper.findWhere((node:any) => node.prop('testID') === 'settings-units-micro').simulate('press')
     expect(props.updateDisplayUnits.mock.calls.length).to.equal(1)
     expect(props.updateDisplayUnits.mock.calls[0][0]).to.equal(DisplayUnits.MICRO)
 
-    wrapper.findWhere((node:any) => node.prop('testID') === 'units-milli').simulate('press')
+    wrapper.findWhere((node:any) => node.prop('testID') === 'settings-units-milli').simulate('press')
     expect(props.updateDisplayUnits.mock.calls.length).to.equal(2)
     expect(props.updateDisplayUnits.mock.calls[1][0]).to.equal(DisplayUnits.MILLI)
 
-    wrapper.findWhere((node:any) => node.prop('testID') === 'units-whole').simulate('press')
+    wrapper.findWhere((node:any) => node.prop('testID') === 'settings-units-whole').simulate('press')
     expect(props.updateDisplayUnits.mock.calls.length).to.equal(3)
     expect(props.updateDisplayUnits.mock.calls[2][0]).to.equal(DisplayUnits.WHOLE)
 
