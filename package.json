@@ -17,6 +17,9 @@
     "@types/react-router-native": "^4.2.4",
     "@types/redux-mock-store": "^1.0.1",
     "chai": "^4.2.0",
+    "cross-env": "^5.2.0",
+    "cypress": "^3.4.1",
+    "electron-is-dev": "^1.1.0",
     "enzyme": "^3.10.0",
     "enzyme-adapter-react-16": "^1.14.0",
     "enzyme-to-json": "^3.3.5",
@@ -41,7 +44,15 @@
     "redux-thunk": "^2.3.0",
     "typescript": "^3.5.3"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "@babel/core": "^7.5.5",
+    "@babel/preset-env": "^7.5.5",
+    "@cypress/webpack-preprocessor": "^4.1.0",
+    "concurrently": "^4.1.1",
+    "electron": "^6.0.0",
+    "electron-builder": "^21.2.0",
+    "wait-on": "^3.3.0"
+  },
   "scripts": {
     "start": "NODE_PATH=./ react-scripts start",
     "build-web": "NODE_PATH=./ react-scripts build",
@@ -52,7 +63,10 @@
     "android": "NODE_PATH=./ expo android",
     "ios": "NODE_PATH=./ expo ios",
     "build:ios": "NODE_PATH=./ expo build:ios",
-    "build:android": "NODE_PATH=./ expo build:android"
+    "build:android": "NODE_PATH=./ expo build:android",
+    "electron-dev": "concurrently \"cross-env BROWSER=none yarn start\" \"wait-on http://localhost:3000 && electron ./public/electron.js\"",
+    "electron-release": "yarn build-web && electron-builder --publish=always",
+    "electron-build": "yarn build-web && electron-builder"
   },
   "browserslist": {
     "production": [
